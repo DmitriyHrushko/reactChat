@@ -34,9 +34,8 @@ export const LoginPage = () => {
 			<FlexCenter sx={{ minHeight: '100vh' }}>
 				<ElevatedCard sx={{ p: 4, width: '100%' }}>
 					<FlexColumn sx={{ textAlign: 'center', mb: 4, gap: 1 }}>
-						<LoginIcon sx={{ fontSize: '3.75rem', color: 'primary.main' }} />
 						<GradientText variant='h4' component='h1'>
-							Welcome
+							Sign In
 						</GradientText>
 						<Typography variant='body1' color='text.secondary'>
 							Please enter your username to continue
