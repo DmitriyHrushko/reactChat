@@ -9,7 +9,10 @@ export const productSchema = yup
 			.required(VALIDATION_MESSAGES.REQUIRED)
 			.min(FIELD_LIMITS.TITLE.MIN, VALIDATION_MESSAGES.TOO_SHORT(FIELD_LIMITS.TITLE.MIN))
 			.max(FIELD_LIMITS.TITLE.MAX, VALIDATION_MESSAGES.TOO_LONG(FIELD_LIMITS.TITLE.MAX))
-			.matches(VALIDATION_REGEX.ALPHANUMERIC_LATIN, 'Title can only contain latin letters, numbers, and basic punctuation'),
+			.matches(
+				VALIDATION_REGEX.ALPHANUMERIC_LATIN,
+				'Title can only contain latin letters, numbers, and basic punctuation'
+			),
 
 		price: yup
 			.number()
@@ -32,7 +35,10 @@ export const productSchema = yup
 			.required(VALIDATION_MESSAGES.REQUIRED)
 			.min(FIELD_LIMITS.DESCRIPTION.MIN, VALIDATION_MESSAGES.TOO_SHORT(FIELD_LIMITS.DESCRIPTION.MIN))
 			.max(FIELD_LIMITS.DESCRIPTION.MAX, VALIDATION_MESSAGES.TOO_LONG(FIELD_LIMITS.DESCRIPTION.MAX))
-			.matches(VALIDATION_REGEX.ALPHANUMERIC_LATIN, 'Description can only contain latin letters, numbers, and basic punctuation'),
+			.matches(
+				VALIDATION_REGEX.ALPHANUMERIC_LATIN,
+				'Description can only contain latin letters, numbers, and basic punctuation'
+			),
 
 		category: yup
 			.string()

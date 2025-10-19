@@ -12,7 +12,13 @@ interface SortSelectProps {
 	hideCreated?: boolean;
 }
 
-export const SortSelect = ({ sortBy, sortOrder, onSortByChange, onSortOrderChange, hideCreated = false }: SortSelectProps) => {
+export const SortSelect = ({
+	sortBy,
+	sortOrder,
+	onSortByChange,
+	onSortOrderChange,
+	hideCreated = false,
+}: SortSelectProps) => {
 	const options = hideCreated ? SORT_OPTIONS.filter((o) => o.value !== 'createdAt') : SORT_OPTIONS;
 
 	useEffect(() => {
