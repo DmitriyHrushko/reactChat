@@ -1,7 +1,9 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import { persistStore, persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-
+import { productApi } from '../services/productApi';
+import productReducer from '../features/products/productSlice';
+import chatReducer from '../features/chat/chatSlice';
 import authReducer from '../features/auth/authSlice';
 
 const persistConfig = {
@@ -9,10 +11,15 @@ const persistConfig = {
 	version: 1,
 	storage,
 	// Only persist specific reducers
-	whitelist: ['auth'],
+	whitelist: ['localProducts', 'chat', 'auth', productApi.reducerPath],
 };
 
 const rootReducer = combineReducers({
+	[productApi.reducerPath]: productApi.reducer,
+
+	// Feature reducers
+	localProducts: productReducer,
+	chat: chatReducer,
 	auth: authReducer,
 });
 
@@ -26,7 +33,8 @@ export const store = configureStore({
 				// Ignore redux-persist actions
 				ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
 			},
-		}).concat([]),
+		}).concat(productApi.middleware),
+	devTools: import.meta.env.MODE !== 'production',
 });
 
 export const persistor = persistStore(store);

@@ -10,18 +10,19 @@ export const HomePage = () => {
 	const username = useAppSelector(selectUsername);
 
 	return (
-		<Container maxWidth='md'>
-			<Box
-				sx={{
-					display: 'flex',
-					flexDirection: 'column',
-					alignItems: 'center',
-					justifyContent: 'center',
-					minHeight: '60vh',
-					textAlign: 'center',
-					gap: 3,
-				}}
-			>
+		<Box
+			sx={{
+				display: 'flex',
+				flexDirection: 'column',
+				alignItems: 'center',
+				justifyContent: 'center',
+				minHeight: 'calc(100vh - 64px - 56px)',
+				textAlign: 'center',
+				gap: 3,
+				px: 2,
+			}}
+		>
+			<Container maxWidth='md'>
 				{isAuthenticated && username && (
 					<Alert severity='success' sx={{ width: '100%' }}>
 						Welcome back, <strong>{username}</strong>!
@@ -45,7 +46,12 @@ export const HomePage = () => {
 						View Products
 					</Button>
 
-					<Button variant='outlined' size='large' startIcon={<Add />} onClick={() => navigate('/products/create')}>
+					<Button
+						variant='outlined'
+						size='large'
+						startIcon={<Add />}
+						onClick={() => navigate('/products/createProduct')}
+					>
 						Create Product
 					</Button>
 
@@ -61,7 +67,7 @@ export const HomePage = () => {
 						</Button>
 					)}
 				</Box>
-			</Box>
-		</Container>
+			</Container>
+		</Box>
 	);
 };
