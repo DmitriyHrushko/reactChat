@@ -55,12 +55,11 @@ const io = new Server(httpServer, {
 const productRooms = new Map();
 
 io.on('connection', (socket) => {
-  console.log('Client connected:', socket.id);
 
   // Join product room
   socket.on('join-product-room', ({ productId }) => {
     socket.join(`product-${productId}`);
-    console.log(`Socket ${socket.id} joined product room: ${productId}`);
+
 
     // Track users in room
     if (!productRooms.has(productId)) {
@@ -71,7 +70,7 @@ io.on('connection', (socket) => {
     // Send existing messages to the newly joined user
     const existingMessages = messagesStore[productId] || [];
     if (existingMessages.length > 0) {
-      console.log(`📜 Sending ${existingMessages.length} existing messages to ${socket.id}`);
+
       socket.emit('chat-history', { productId, messages: existingMessages });
     }
   });
@@ -79,7 +78,7 @@ io.on('connection', (socket) => {
   // Leave product room
   socket.on('leave-product-room', ({ productId }) => {
     socket.leave(`product-${productId}`);
-    console.log(`Socket ${socket.id} left product room: ${productId}`);
+
 
     // Remove from tracking
     if (productRooms.has(productId)) {
@@ -88,23 +87,23 @@ io.on('connection', (socket) => {
   });
 
   socket.on('product-created', (product) => {
-    console.log('Product created:', product.title);
+
     // Broadcast to all clients
     socket.broadcast.emit('product-created', product);
   });
 
   socket.on('product-updated', (product) => {
-    console.log('Product updated:', product.title);
+
     socket.broadcast.emit('product-updated', product);
   });
 
   socket.on('product-deleted', ({ id }) => {
-    console.log('Product deleted:', id);
+
     socket.broadcast.emit('product-deleted', { id });
   });
 
   socket.on('send-chat-message', ({ productId, message, username }) => {
-    console.log(`Chat message in product ${productId} from ${username}`);
+
 
     const chatMessage = {
       id: `${Date.now()}-${socket.id}`,
@@ -122,19 +121,14 @@ io.on('connection', (socket) => {
     messagesStore[productId].push(chatMessage);
     saveMessages(messagesStore);
 
-    console.log('📤 Broadcasting chat message:', chatMessage);
-    console.log('📍 To room: product-' + productId);
-    console.log('💾 Saved to storage (total:', messagesStore[productId].length, 'messages)');
-
     // Broadcast to ALL clients in the product room (including sender)
     io.to(`product-${productId}`).emit('chat-message', chatMessage);
 
-    console.log('✅ Message broadcasted successfully');
   });
 
   // Disconnect
   socket.on('disconnect', () => {
-    console.log('Client disconnected:', socket.id);
+
 
     // Remove from all rooms
     productRooms.forEach((users, productId) => {
@@ -149,6 +143,6 @@ io.on('connection', (socket) => {
 const PORT = process.env.PORT || 3001;
 
 httpServer.listen(PORT, () => {
-  console.log(`✓ Socket.IO server running on http://localhost:${PORT}`);
-  console.log('✓ Waiting for client connections...');
+  // Keep minimal startup info
+  console.log(`Socket.IO server listening on port ${PORT}`);
 });

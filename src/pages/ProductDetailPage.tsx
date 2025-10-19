@@ -5,12 +5,16 @@ import { Edit, Delete, Add, ArrowBack } from '@mui/icons-material';
 import { useGetProductByIdQuery } from '../services/productApi';
 import { useAppSelector, useAppDispatch } from '../app/hooks';
 import { selectLocalProductById, deleteLocalProduct, addRemoteToLocal } from '../features/products/productSlice';
+import { ChatBox } from '../components/chat/ChatBox';
 import { ProductDetailSkeleton } from '../components/common/LoadingSkeletons';
 import { ConfirmDialog } from '../components/common/ConfirmDialog';
 import { ToastNotification } from '../components/common/ToastNotification';
 import { useConfirmDialog, useToast } from '../hooks';
 import { formatPrice, formatDate } from '../utils';
 
+/**
+ * Product detail page with Details and Chat tabs
+ */
 export const ProductDetailPage = () => {
 	const { id } = useParams<{ id: string }>();
 	const navigate = useNavigate();
@@ -70,7 +74,7 @@ export const ProductDetailPage = () => {
 	}
 
 	return (
-		<Box>
+		<Box sx={{ maxWidth: 1200, mx: 'auto', width: '100%' }}>
 			<Box sx={{ mb: 3, display: 'flex', alignItems: 'center', gap: 2 }}>
 				<IconButton onClick={() => navigate(-1)}>
 					<ArrowBack />
@@ -145,6 +149,8 @@ export const ProductDetailPage = () => {
 					</Box>
 				</Box>
 			)}
+
+			{activeTab === 1 && id && <ChatBox productId={id} />}
 
 			<ConfirmDialog
 				open={confirmDialog.isOpen}

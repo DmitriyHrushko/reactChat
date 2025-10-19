@@ -1,13 +1,12 @@
 import { useNavigate } from 'react-router-dom';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Typography, TextField, Container } from '@mui/material';
+import { Typography, TextField, Container, Box } from '@mui/material';
 import { Login as LoginIcon } from '@mui/icons-material';
 import { useAppDispatch } from '../app/hooks';
 import { login } from '../features/auth/authSlice';
 import { loginSchema, type LoginFormData } from '../utils/validation';
-
-import { FlexCenter, FlexColumn, ElevatedCard, GradientText, GradientButton } from '../components/styled';
+import { FlexColumn, ElevatedCard, GradientText, GradientButton } from '../components/styled';
 
 export const LoginPage = () => {
 	const navigate = useNavigate();
@@ -30,18 +29,29 @@ export const LoginPage = () => {
 	};
 
 	return (
-		<Container maxWidth='sm'>
-			<FlexCenter sx={{ minHeight: '100vh' }}>
+		<Box
+			sx={{
+				display: 'flex',
+				justifyContent: 'center',
+				alignItems: 'center',
+				minHeight: 'calc(100vh - 64px - 56px)',
+				px: 2,
+			}}
+		>
+			<Container maxWidth='sm'>
 				<ElevatedCard sx={{ p: 4, width: '100%' }}>
-					<FlexColumn sx={{ textAlign: 'center', mb: 4, gap: 1 }}>
+					<FlexColumn sx={{ textAlign: 'center', mb: 3, gap: 1 }}>
+						<Box sx={{ display: 'flex', justifyContent: 'center', mb: 1 }}>
+							<LoginIcon sx={{ fontSize: '4rem', color: 'primary.main' }} />
+						</Box>
 						<GradientText variant='h4' component='h1'>
-							Sign In
+							Welcome
 						</GradientText>
-						<Typography variant='body1' color='text.secondary'>
+						<Typography variant='body2' color='text.secondary'>
 							Please enter your username to continue
 						</Typography>
-						<Typography variant='caption' color='text.secondary'>
-							Username: 3-20 latin letters, no spaces
+						<Typography variant='caption' color='text.secondary' sx={{ fontSize: '0.7rem' }}>
+							3-20 latin letters, no spaces
 						</Typography>
 					</FlexColumn>
 
@@ -75,7 +85,7 @@ export const LoginPage = () => {
 						</FlexColumn>
 					</form>
 				</ElevatedCard>
-			</FlexCenter>
-		</Container>
+			</Container>
+		</Box>
 	);
 };

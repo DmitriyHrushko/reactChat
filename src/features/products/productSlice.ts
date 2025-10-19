@@ -53,6 +53,14 @@ const productSlice = createSlice({
 			}
 		},
 
+		restoreLocalProduct: (state, action: PayloadAction<Product>) => {
+			// Restore a deleted product
+			const exists = state.products.some((p) => p.id === action.payload.id);
+			if (!exists) {
+				state.products.unshift(action.payload);
+			}
+		},
+
 		clearLocalProducts: (state) => {
 			state.products = [];
 		},
@@ -65,6 +73,7 @@ export const {
 	deleteLocalProduct,
 	togglePublished,
 	addRemoteToLocal,
+	restoreLocalProduct,
 	clearLocalProducts,
 } = productSlice.actions;
 

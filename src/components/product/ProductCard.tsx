@@ -2,12 +2,14 @@ import { Card, CardMedia, CardContent, CardActions, Typography, Button, Chip, Bo
 import { useNavigate } from 'react-router-dom';
 import type { Product } from '../../types';
 import { formatPrice, truncateText } from '../../utils';
+import { HighlightedText } from '../common';
 
 interface ProductCardProps {
 	product: Product;
+	searchQuery?: string;
 }
 
-export const ProductCard = ({ product }: ProductCardProps) => {
+export const ProductCard = ({ product, searchQuery = '' }: ProductCardProps) => {
 	const navigate = useNavigate();
 
 	const handleClick = () => {
@@ -38,7 +40,7 @@ export const ProductCard = ({ product }: ProductCardProps) => {
 			/>
 			<CardContent sx={{ flexGrow: 1 }}>
 				<Typography gutterBottom variant='h6' component='h2' noWrap>
-					{product.title}
+					<HighlightedText text={product.title} searchQuery={searchQuery || ''} />
 				</Typography>
 				<Typography variant='body2' color='text.secondary' sx={{ mb: 1 }}>
 					{truncateText(product.description, 100)}

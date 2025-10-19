@@ -4,6 +4,7 @@ import { ArrowBack, Save } from '@mui/icons-material';
 import { Controller } from 'react-hook-form';
 import { useAppDispatch } from '../app/hooks';
 import { addLocalProduct } from '../features/products/productSlice';
+import { useCreateProductMutation } from '../services/productApi';
 import { FormField } from '../components/common/FormField';
 import { ToastNotification } from '../components/common/ToastNotification';
 import { useToast, useSocket, useProductForm } from '../hooks';
@@ -16,6 +17,7 @@ export const CreateProductPage = () => {
 	const dispatch = useAppDispatch();
 	const { toast, showSuccess, showError, closeToast } = useToast();
 	const { emitProductCreated } = useSocket();
+	const [createProduct] = useCreateProductMutation();
 
 	const { control, handleSubmit, isSubmitting } = useProductForm();
 
@@ -30,7 +32,8 @@ export const CreateProductPage = () => {
 				published: data.published,
 			};
 
-			// Add to local products
+			await createProduct(productInput).unwrap();
+
 			dispatch(addLocalProduct(productInput));
 
 			emitProductCreated({
@@ -48,7 +51,7 @@ export const CreateProductPage = () => {
 	};
 
 	return (
-		<Box>
+		<Box sx={{ maxWidth: 800, mx: 'auto', width: '100%' }}>
 			<FlexRow sx={{ mb: 3 }}>
 				<IconButton onClick={() => navigate(-1)}>
 					<ArrowBack />
@@ -58,20 +61,16 @@ export const CreateProductPage = () => {
 				</GradientText>
 			</FlexRow>
 
-			<ElevatedCard sx={{ p: 3, maxWidth: 800 }}>
-				<Alert severity='info' sx={{ mb: 3 }}>
-					<Typography variant='subtitle2' gutterBottom>
+			<ElevatedCard sx={{ p: 3 }}>
+				<Alert severity='info' sx={{ mb: 2, py: 1 }}>
+					<Typography variant='caption' sx={{ display: 'block', mb: 0.5, fontWeight: 600 }}>
 						Validation Rules:
 					</Typography>
-					<Typography variant='body2'>
-						• Title: 3-100 characters, latin letters, numbers, basic punctuation
+					<Typography variant='caption' sx={{ fontSize: '0.7rem', lineHeight: 1.4 }}>
+						• Title: 3-100 chars • Price: $0.01-$999,999.99
 						<br />
-						• Price: $0.01-$999,999.99, max 2 decimal places
-						<br />
-						• Description: 10-500 characters, latin letters, numbers, basic punctuation
-						<br />
-						• Category: 2-50 characters, latin letters only (optional)
-						<br />• Image: Valid URL starting with http:// or https:// (optional)
+						• Description: 10-500 chars • Category: 2-50 chars (optional)
+						<br />• Image: Valid URL (optional)
 					</Typography>
 				</Alert>
 

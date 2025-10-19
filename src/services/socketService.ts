@@ -1,7 +1,8 @@
 import { io, type Socket } from 'socket.io-client';
 import { SocketEvent, type SocketEventPayloads } from '../types';
+import { SOCKET_URL } from '../constants';
 
-export const socket: Socket = io(import.meta.env.SOCKET_URL, {
+export const socket: Socket = io(SOCKET_URL, {
 	transports: ['websocket', 'polling'],
 	reconnection: true,
 	reconnectionDelay: 1000,

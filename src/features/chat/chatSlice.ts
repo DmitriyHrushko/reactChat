@@ -29,13 +29,6 @@ const chatSlice = createSlice({
 
 			if (!messageExists) {
 				state.messagesByProduct[productId].push(action.payload);
-				console.log(`📝 Message added to Redux:`, {
-					id,
-					username,
-					message,
-					total: state.messagesByProduct[productId].length,
-					allIds: state.messagesByProduct[productId].map((m) => m.id),
-				});
 			} else {
 				console.warn(`⚠️ Duplicate message prevented:`, {
 					id,
@@ -49,7 +42,6 @@ const chatSlice = createSlice({
 		loadChatHistory: (state, action: PayloadAction<{ productId: string; messages: ChatMessage[] }>) => {
 			const { productId, messages } = action.payload;
 			state.messagesByProduct[productId] = messages;
-			console.log(`📜 Chat history loaded for product ${productId}:`, messages.length, 'messages');
 		},
 
 		sendMessage: (state, action: PayloadAction<CreateMessageInput>) => {

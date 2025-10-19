@@ -31,12 +31,10 @@ export const ChatBox = ({ productId }: ChatBoxProps) => {
 	const messagesEndRef = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
-		console.log(`📥 Joining product room: ${productId}`);
 		// Join product room on mount
 		joinRoom(productId);
 
 		return () => {
-			console.log(`📤 Leaving product room: ${productId}`);
 			// Leave room on unmount
 			leaveRoom(productId);
 		};

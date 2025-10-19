@@ -1,14 +1,14 @@
 import { AppBar, Toolbar, Typography, Button, Box, Chip } from '@mui/material';
 import { Outlet, useNavigate } from 'react-router-dom';
-import { Home, ShoppingCart, Add, Inventory, Logout } from '@mui/icons-material';
-
+import { Home, ShoppingCart, Add, Inventory, FiberManualRecord, Logout } from '@mui/icons-material';
+import { useSocket } from '../hooks';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { logout, selectIsAuthenticated, selectUsername } from '../features/auth/authSlice';
 
 export const MainLayout = () => {
 	const navigate = useNavigate();
 	const dispatch = useAppDispatch();
-
+	const { isConnected } = useSocket();
 	const isAuthenticated = useAppSelector(selectIsAuthenticated);
 	const username = useAppSelector(selectUsername);
 
@@ -18,7 +18,7 @@ export const MainLayout = () => {
 	};
 
 	return (
-		<Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+		<Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', pt: '64px', pb: '56px' }}>
 			{/* Header */}
 			<AppBar
 				position='fixed'
@@ -26,7 +26,7 @@ export const MainLayout = () => {
 					top: 0,
 					left: 0,
 					right: 0,
-					zIndex: (theme) => theme.zIndex.drawer + 1,
+					zIndex: (theme) => theme.zIndex.appBar,
 				}}
 			>
 				<Toolbar sx={{ px: { xs: 2, sm: 3, md: 4, lg: 6 } }}>
@@ -42,6 +42,21 @@ export const MainLayout = () => {
 					>
 						Product Manager
 					</Typography>
+
+					{/* Socket.IO Connection Indicator */}
+					<Chip
+						icon={<FiberManualRecord sx={{ fontSize: 12 }} />}
+						label='Chat'
+						size='small'
+						color={isConnected ? 'success' : 'default'}
+						sx={{
+							mr: 2,
+							'& .MuiChip-icon': {
+								color: isConnected ? 'success.main' : 'grey.500',
+							},
+							display: { xs: 'none', sm: 'flex' },
+						}}
+					/>
 
 					<Box sx={{ display: 'flex', gap: { xs: 0.5, sm: 1 } }}>
 						<Button
@@ -62,11 +77,11 @@ export const MainLayout = () => {
 						</Button>
 						<Button
 							color='inherit'
-							onClick={() => navigate('/products/create')}
+							onClick={() => navigate('/products/createProduct')}
 							startIcon={<Add />}
 							sx={{ fontSize: { xs: '0.75rem', sm: '0.875rem' } }}
 						>
-							Create
+							Create Product
 						</Button>
 						<Button
 							color='inherit'
@@ -98,14 +113,20 @@ export const MainLayout = () => {
 				component='main'
 				sx={{
 					flex: 1,
-					mt: '64px', // Height of AppBar
-					mb: '80px', // Height of footer
-					px: { xs: 2, sm: 3, md: 4, lg: 6 },
-					py: 4,
 					overflow: 'auto',
+					py: 4,
 				}}
 			>
-				<Outlet />
+				<Box
+					sx={{
+						px: { xs: 2, sm: 3, md: 4, lg: 6 },
+						maxWidth: '1400px',
+						width: '100%',
+						mx: 'auto',
+					}}
+				>
+					<Outlet />
+				</Box>
 			</Box>
 
 			{/* Footer */}
@@ -121,7 +142,7 @@ export const MainLayout = () => {
 					backgroundColor: 'background.paper',
 					borderTop: 1,
 					borderColor: 'divider',
-					zIndex: (theme) => theme.zIndex.drawer + 1,
+					zIndex: (theme) => theme.zIndex.appBar,
 				}}
 			>
 				<Typography variant='body2' color='text.secondary' align='center'>
