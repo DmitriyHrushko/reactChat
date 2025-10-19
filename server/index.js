@@ -1,6 +1,4 @@
 /**
- * Simple Socket.IO Server for Product Manager App
- * 
  * This server handles:
  * - Product events (created, updated, deleted)
  * - Chat messages per product room
@@ -45,8 +43,11 @@ let messagesStore = loadMessages();
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
   cors: {
-    origin: 'http://localhost:5173', // Vite dev server
+    origin: process.env.NODE_ENV === 'production'
+      ? ['https://your-app.vercel.app', 'https://your-app-*.vercel.app'] // Replace with your Vercel URL
+      : 'http://localhost:5173', // Vite dev server
     methods: ['GET', 'POST'],
+    credentials: true,
   },
 });
 
