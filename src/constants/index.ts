@@ -1,5 +1,6 @@
 export const PRODUCT_LIMITS = [8, 16, Infinity] as const;
 export const DEFAULT_PRODUCT_LIMIT = 8;
+export const ITEMS_PER_PAGE = 8;
 
 export const SORT_OPTIONS = [
 	{ value: 'title', label: 'Title' },
