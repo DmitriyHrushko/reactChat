@@ -30,18 +30,35 @@ export const MainLayout = () => {
 				}}
 			>
 				<Toolbar sx={{ px: { xs: 2, sm: 3, md: 4, lg: 6 } }}>
-					<ShoppingCart sx={{ mr: 2 }} />
-					<Typography
-						variant='h6'
-						component='div'
+					<Box
+						onClick={() => navigate('/')}
+						role='button'
+						aria-label='Go to home'
+						title='Go to home'
+						tabIndex={0}
+						onKeyDown={(e: React.KeyboardEvent) => {
+							if (e.key === 'Enter' || e.key === ' ') navigate('/');
+						}}
 						sx={{
+							display: 'flex',
+							alignItems: 'center',
 							flexGrow: 1,
-							fontWeight: 600,
-							fontSize: { xs: '1rem', sm: '1.25rem' },
+							cursor: 'pointer',
+							'&:hover': { opacity: 0.9 },
 						}}
 					>
-						Product Manager
-					</Typography>
+						<ShoppingCart sx={{ mr: 2 }} />
+						<Typography
+							variant='h6'
+							component='div'
+							sx={{
+								fontWeight: 600,
+								fontSize: { xs: '1rem', sm: '1.25rem' },
+							}}
+						>
+							Product Manager
+						</Typography>
+					</Box>
 
 					{/* Socket.IO Connection Indicator */}
 					<Chip
@@ -57,6 +74,8 @@ export const MainLayout = () => {
 							display: { xs: 'none', sm: 'flex' },
 						}}
 					/>
+
+					{/* (removed centered username) */}
 
 					<Box sx={{ display: 'flex', gap: { xs: 0.5, sm: 1 } }}>
 						<Button
