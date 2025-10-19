@@ -183,6 +183,7 @@ export const ProductsPage = () => {
 					sortOrder={activeTab === 'remote' ? remoteFilters.sortOrder : localFilters.sortOrder}
 					onSortByChange={activeTab === 'remote' ? handleRemoteSortByChange : handleLocalSortByChange}
 					onSortOrderChange={activeTab === 'remote' ? handleRemoteSortOrderChange : handleLocalSortOrderChange}
+					hideCreated={activeTab === 'remote'}
 				/>
 				{activeTab === 'remote' && (
 					<ButtonGroup variant='outlined' size='small'>

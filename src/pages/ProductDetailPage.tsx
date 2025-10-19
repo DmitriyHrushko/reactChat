@@ -143,9 +143,11 @@ export const ProductDetailPage = () => {
 						<Typography variant='body2' color='text.secondary'>
 							<strong>Product ID:</strong> {product.id}
 						</Typography>
-						<Typography variant='body2' color='text.secondary'>
-							<strong>Created:</strong> {formatDate(product.createdAt)}
-						</Typography>
+						{isLocal && (
+							<Typography variant='body2' color='text.secondary'>
+								<strong>Created:</strong> {formatDate(product.createdAt)}
+							</Typography>
+						)}
 					</Box>
 				</Box>
 			)}

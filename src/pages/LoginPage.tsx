@@ -51,7 +51,7 @@ export const LoginPage = () => {
 							Please enter your username to continue
 						</Typography>
 						<Typography variant='caption' color='text.secondary' sx={{ fontSize: '0.7rem' }}>
-							3-20 latin letters, no spaces
+							3-20 letters, no spaces
 						</Typography>
 					</FlexColumn>
 

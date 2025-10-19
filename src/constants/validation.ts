@@ -1,9 +1,9 @@
 export const VALIDATION_REGEX = {
-	LATIN_ONLY: /^[a-zA-Z\s]*$/,
-	LATIN_NO_SPACES: /^[a-zA-Z]*$/,
+	LATIN_ONLY: /^[A-Za-z\s'-]*$/,
+	LATIN_NO_SPACES: /^[A-Za-z]+$/,
 	NUMBERS_ONLY: /^\d*\.?\d*$/,
 	URL: /^https?:\/\/.+\..+/,
-	ALPHANUMERIC_LATIN: /^[a-zA-Z0-9\s.,!?-]*$/,
+		ALPHANUMERIC_LATIN: /^[A-Za-z0-9\s.,!?:;"'()\-–%&]*$/,
 } as const;
 
 export const FIELD_LIMITS = {
